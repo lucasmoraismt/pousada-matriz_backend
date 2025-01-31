@@ -9,9 +9,9 @@ Desenvolvimento de um sistema de gerenciamento de quartos de pousada, feito em C
 - OpenSSL (para segurança nas conexões)
 
 ## Configuração
-1. Crie um arquivo `.env` com sua string de conexão ao PostgreSQL:
-   ```
-   DATABASE_URL=postgresql://user:password@host:port/dbname
+1. Configure o endereço do banco de dados Postgres no terminal
+   ```bash
+   export DATABASE_URL="postgresql://user:password@host:port/dbname"
    ```
 
 2. Execute o script SQL para criar as tabelas do banco de dados:
