@@ -1,7 +1,7 @@
 # pousada_matriz
 Desenvolvimento de um sistema de gerenciamento de quartos de pousada, feito em C++ para a disciplina de Estrutura de Dados Orientada a Objetos, do curso de Sistemas de Informação do CIn, UFPE.
 
-## Requisitos
+## Requisitos e Ferramentas utilizadas
 - CMake (>= 3.15)
 - Compilador C++ (GCC/Clang/MSVC)
 - PostgreSQL (bibliotecas de desenvolvimento)
@@ -40,6 +40,6 @@ Desenvolvimento de um sistema de gerenciamento de quartos de pousada, feito em C
 
 4. Execute a aplicação:
    ```bash
-   ./
+   ./guesthouse_backend
    ```
 
