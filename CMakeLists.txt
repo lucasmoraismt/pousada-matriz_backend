@@ -38,7 +38,6 @@ add_executable(${PROJECT_NAME}
   repositories/Room/RoomRepository.cpp
   repositories/Rental/RentalRepository.cpp
   utils/Database.cpp
-  utils/Env.cpp
 )
 
 # Link libraries
