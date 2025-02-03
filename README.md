@@ -19,10 +19,9 @@ Welcome to **Pousada Matriz**, a hotel room management system developed in C++ f
    - [Room Endpoints](#room-endpoints)
    - [Rental Endpoints](#rental-endpoints)
 5. [Requirements and Tools](#requirements-and-tools)
-6. [Setup and Configuration](#setup-and-configuration)
-7. [Build and Execution](#build-and-execution)
-8. [Contributing](#contributing)
-9. [License](#license)
+6. [Demonstration Video](#demonstration-video)
+7. [Setup and Configuration](#setup-and-configuration)
+8. [Build and Execution](#build-and-execution)
 
 ---
 
@@ -113,10 +112,10 @@ public:
 };
 ```
 
-## Abstraction
+### Abstraction
 Abstraction is demonstrated by hiding the implementation details of database operations in the repository classes. The controllers interact with the repositories without needing to know how the data is stored or retrieved.
 
-## Inheritance and Polymorphism
+### Inheritance and Polymorphism
 While not heavily used yet, this project will be updated in the future for real world use and fill have more features.
 
 ---
