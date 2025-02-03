@@ -3,28 +3,28 @@
 
 crow::json::wvalue Room::toJson() const {
   crow::json::wvalue json;
-  json["id"] = id;
-  json["number"] = number;
-  json["price"] = price;
-  json["floor"] = floor;
-  json["isSuite"] = isSuite;
-  json["airConditioner"] = airConditioner;
-  json["guestCapacity"] = guestCapacity;
-  json["bunkbed"] = bunkbed;
-  json["createdAt"] = createdAt;
-  json["updatedAt"] = updatedAt;
-  json["deletedAt"] = deletedAt;
+  json["id"] = getId();
+  json["number"] = getNumber();
+  json["price"] = getPrice();
+  json["floor"] = getFloor();
+  json["isSuite"] = getIsSuite();
+  json["airConditioner"] = getAirConditioner();
+  json["guestCapacity"] = getGuestCapacity();
+  json["bunkbed"] = getBunkbed();
+  json["createdAt"] = getCreatedAt();
+  json["updatedAt"] = getUpdatedAt();
+  json["deletedAt"] = getDeletedAt();
   return json;
 }
 
 Room Room::fromJson(const crow::json::rvalue& json) {
   Room room;
-  room.number = json["number"].i();
-  room.price = json["price"].i();
-  room.floor = json["floor"].i();
-  room.isSuite = json["isSuite"].b();
-  room.airConditioner = json["airConditioner"].b();
-  room.guestCapacity = json["guestCapacity"].i();
-  room.bunkbed = json["bunkbed"].b();
+  room.setNumber(json["number"].i());
+  room.setPrice(json["price"].i());
+  room.setFloor(json["floor"].i());
+  room.setIsSuite(json["isSuite"].b());
+  room.setAirConditioner(json["airConditioner"].b());
+  room.setGuestCapacity(json["guestCapacity"].i());
+  room.setBunkbed(json["bunkbed"].b());
   return room;
 }
