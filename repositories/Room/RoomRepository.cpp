@@ -11,16 +11,19 @@ crow::response RoomRepository::getAllRooms() {
     crow::json::wvalue json;
     int index = 0;
     for (auto row : result) {
-      json[index]["id"] = row["id"].as<int>();
-      json[index]["number"] = row["number"].as<int>();
-      json[index]["price"] = row["price"].as<int>();
-      json[index]["floor"] = row["floor"].as<int>();
-      json[index]["isSuite"] = row["isSuite"].as<bool>();
-      json[index]["airConditioner"] = row["airConditioner"].as<bool>();
-      json[index]["guestCapacity"] = row["guestCapacity"].as<int>();
-      json[index]["bunkbed"] = row["bunkbed"].as<bool>();
-      json[index]["createdAt"] = row["createdAt"].as<std::string>();
-      json[index]["updatedAt"] = row["updatedAt"].as<std::string>();
+      Room room;
+      room.setId(row["id"].as<int>());
+      room.setNumber(row["number"].as<int>());
+      room.setPrice(row["price"].as<int>());
+      room.setFloor(row["floor"].as<int>());
+      room.setIsSuite(row["isSuite"].as<bool>());
+      room.setAirConditioner(row["airConditioner"].as<bool>());
+      room.setGuestCapacity(row["guestCapacity"].as<int>());
+      room.setBunkbed(row["bunkbed"].as<bool>());
+      room.setCreatedAt(row["createdAt"].as<std::string>());
+      room.setUpdatedAt(row["updatedAt"].as<std::string>());
+
+      json[index] = room.toJson();
       index++;
     }
     return crow::response{json};
@@ -43,19 +46,19 @@ crow::response RoomRepository::getRoomById(int id) {
     }
 
     auto row = result[0];
-    crow::json::wvalue json;
-    json["id"] = row["id"].as<int>();
-    json["number"] = row["number"].as<int>();
-    json["price"] = row["price"].as<int>();
-    json["floor"] = row["floor"].as<int>();
-    json["isSuite"] = row["isSuite"].as<bool>();
-    json["airConditioner"] = row["airConditioner"].as<bool>();
-    json["guestCapacity"] = row["guestCapacity"].as<int>();
-    json["bunkbed"] = row["bunkbed"].as<bool>();
-    json["createdAt"] = row["createdAt"].as<std::string>();
-    json["updatedAt"] = row["updatedAt"].as<std::string>();
+    Room room;
+    room.setId(row["id"].as<int>());
+    room.setNumber(row["number"].as<int>());
+    room.setPrice(row["price"].as<int>());
+    room.setFloor(row["floor"].as<int>());
+    room.setIsSuite(row["isSuite"].as<bool>());
+    room.setAirConditioner(row["airConditioner"].as<bool>());
+    room.setGuestCapacity(row["guestCapacity"].as<int>());
+    room.setBunkbed(row["bunkbed"].as<bool>());
+    room.setCreatedAt(row["createdAt"].as<std::string>());
+    room.setUpdatedAt(row["updatedAt"].as<std::string>());
 
-    return crow::response{json};
+    return crow::response{room.toJson()};
   } catch (const std::exception& e) {
     return crow::response(500, e.what());
   }
@@ -76,19 +79,19 @@ crow::response RoomRepository::createRoom(const crow::request& req) {
     txn.exec_params(
       "INSERT INTO rooms (number, price, floor, isSuite, airConditioner, guestCapacity, bunkbed) "
       "VALUES ($1, $2, $3, $4, $5, $6, $7)",
-      room.number,
-      room.price,
-      room.floor,
-      room.isSuite,
-      room.airConditioner,
-      room.guestCapacity,
-      room.bunkbed
+      room.getNumber(),
+      room.getPrice(),
+      room.getFloor(),
+      room.getIsSuite(),
+      room.getAirConditioner(),
+      room.getGuestCapacity(),
+      room.getBunkbed()
     );
     txn.commit();
 
     return crow::response(201);
   } catch (const std::exception& e) {
-      return crow::response(500, e.what());
+    return crow::response(500, e.what());
   }
 }
 
@@ -109,13 +112,13 @@ crow::response RoomRepository::updateRoom(const crow::request& req, int id) {
       "number = $1, price = $2, floor = $3, isSuite = $4, "
       "airConditioner = $5, guestCapacity = $6, bunkbed = $7 "
       "WHERE id = $8",
-      room.number,
-      room.price,
-      room.floor,
-      room.isSuite,
-      room.airConditioner,
-      room.guestCapacity,
-      room.bunkbed,
+      room.getNumber(),
+      room.getPrice(),
+      room.getFloor(),
+      room.getIsSuite(),
+      room.getAirConditioner(),
+      room.getGuestCapacity(),
+      room.getBunkbed(),
       id
     );
     txn.commit();
