@@ -14,12 +14,15 @@ crow::response RentalRepository::getAllRentals() {
     crow::json::wvalue json;
     int index = 0;
     for (auto row : result) {
-      json[index]["id"] = row["id"].as<int>();
-      json[index]["startDate"] = row["startDate"].as<std::string>();
-      json[index]["endDate"] = row["endDate"].as<std::string>();
-      json[index]["roomId"] = row["roomId"].as<int>();
-      json[index]["createdAt"] = row["createdAt"].as<std::string>();
-      json[index]["updatedAt"] = row["updatedAt"].as<std::string>();
+      Rental rental;
+      rental.setId(row["id"].as<int>());
+      rental.setStartDate(row["startDate"].as<std::string>());
+      rental.setEndDate(row["endDate"].as<std::string>());
+      rental.setRoomId(row["roomId"].as<int>());
+      rental.setCreatedAt(row["createdAt"].as<std::string>());
+      rental.setUpdatedAt(row["updatedAt"].as<std::string>());
+
+      json[index] = rental.toJson();
       index++;
     }
     return crow::response{json};
@@ -43,15 +46,15 @@ crow::response RentalRepository::getRentalById(int id) {
     }
 
     auto row = result[0];
-    crow::json::wvalue json;
-    json["id"] = row["id"].as<int>();
-    json["startDate"] = row["startDate"].as<std::string>();
-    json["endDate"] = row["endDate"].as<std::string>();
-    json["roomId"] = row["roomId"].as<int>();
-    json["createdAt"] = row["createdAt"].as<std::string>();
-    json["updatedAt"] = row["updatedAt"].as<std::string>();
+    Rental rental;
+    rental.setId(row["id"].as<int>());
+    rental.setStartDate(row["startDate"].as<std::string>());
+    rental.setEndDate(row["endDate"].as<std::string>());
+    rental.setRoomId(row["roomId"].as<int>());
+    rental.setCreatedAt(row["createdAt"].as<std::string>());
+    rental.setUpdatedAt(row["updatedAt"].as<std::string>());
 
-    return crow::response{json};
+    return crow::response{rental.toJson()};
   } catch (const std::exception& e) {
     return crow::response(500, e.what());
   }
@@ -75,9 +78,9 @@ crow::response RentalRepository::createRental(const crow::request& req) {
       "roomId = $1 AND "
       "(startDate, endDate) OVERLAPS (TO_DATE($2, 'DD/MM/YYYY'), TO_DATE($3, 'DD/MM/YYYY')) "
       "AND deletedAt IS NULL",
-      rental.roomId,
-      rental.startDate,
-      rental.endDate
+      rental.getRoomId(),
+      rental.getStartDate(),
+      rental.getEndDate()
     );
 
     if (!conflict.empty()) {
@@ -87,9 +90,9 @@ crow::response RentalRepository::createRental(const crow::request& req) {
     txn.exec_params(
       "INSERT INTO rentals (startDate, endDate, roomId) "
       "VALUES (TO_DATE($1, 'DD/MM/YYYY'), TO_DATE($2, 'DD/MM/YYYY'), $3)",
-      rental.startDate,
-      rental.endDate,
-      rental.roomId
+      rental.getStartDate(),
+      rental.getEndDate(),
+      rental.getRoomId()
     );
     txn.commit();
 
@@ -115,9 +118,9 @@ crow::response RentalRepository::updateRental(const crow::request& req, int id) 
       "UPDATE rentals SET "
       "startDate = TO_DATE($1, 'DD/MM/YYYY'), endDate = TO_DATE($2, 'DD/MM/YYYY'), roomId = $3 "
       "WHERE id = $4",
-      rental.startDate,
-      rental.endDate,
-      rental.roomId,
+      rental.getStartDate(),
+      rental.getEndDate(),
+      rental.getRoomId(),
       id
     );
     txn.commit();
